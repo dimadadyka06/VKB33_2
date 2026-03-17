@@ -1,0 +1,16 @@
+{% extends 'schedule/base.html' %}
+
+{% block title %}Ошибка записи{% endblock %}
+
+{% block content %}
+<h2>❌ Ошибка при записи на курс</h2>
+
+<div style="border: 1px solid #dc3545; background-color: #f8d7da; padding: 20px; margin: 20px 0; border-radius: 5px;">
+    <p style="font-size: 18px; color: #721c24;">{{ message }}</p>
+</div>
+
+<p>
+    <a href="{% url 'enroll_student' %}" class="btn btn-view">🔄 Попробовать снова</a>
+    <a href="{% url 'schedule_index' %}" class="btn btn-view">🏠 На главную</a>
+</p>
+{% endblock %}

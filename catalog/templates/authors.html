@@ -1,0 +1,40 @@
+{% extends 'base_catalog.html' %}
+
+{% block title %}Преподаватели — Каталог курсов{% endblock %}
+
+{% block content %}
+<section>
+    <h2 class="page-title">👨‍🏫 Наши преподаватели</h2>
+
+    {% if authors %}
+    <div class="card-grid">
+        {% for author in authors %}
+        <article class="card">
+            <h3><a href="/authors/{{ author.id }}/">{{ author.last_name }} {{ author.first_name }}</a></h3>
+
+            {% if author.specialization %}
+            <p class="meta" style="margin-bottom:8px;">🎓 {{ author.specialization }}</p>
+            {% endif %}
+
+            <p class="meta">📧 {{ author.email }}</p>
+            <p class="meta">🕐 Опыт: {{ author.experience_years }} лет</p>
+
+            {% with count=author.courses.count %}
+            <p class="meta" style="margin-top:8px;">
+                📚 Курсов: <strong style="color:#2c3e50;">{{ count }}</strong>
+            </p>
+            {% endwith %}
+
+            <div style="margin-top:14px;">
+                <a href="/authors/{{ author.id }}/" class="btn btn-primary">Подробнее →</a>
+            </div>
+        </article>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="alert-empty">
+        <p>⚠️ Преподаватели пока не добавлены. <a href="/schedule/teachers/create/">Добавить преподавателя</a>.</p>
+    </div>
+    {% endif %}
+</section>
+{% endblock %}

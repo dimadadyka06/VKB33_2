@@ -1,0 +1,51 @@
+{% extends 'base_catalog.html' %}
+
+{% block title %}Курсы — Каталог курсов{% endblock %}
+
+{% block content %}
+<section>
+    <h2 class="page-title">📖 Все курсы</h2>
+
+    {% if courses %}
+    <div class="card-grid">
+        {% for course in courses %}
+        <article class="card">
+            <h3><a href="/courses/{{ course.id }}/">{{ course.title }}</a></h3>
+
+            <div style="margin-bottom:10px;">
+                {% if course.level == 'beginner' %}
+                    <span class="badge badge-beginner">Начинающий</span>
+                {% elif course.level == 'intermediate' %}
+                    <span class="badge badge-intermediate">Средний</span>
+                {% else %}
+                    <span class="badge badge-advanced">Продвинутый</span>
+                {% endif %}
+            </div>
+
+            <p class="meta">{{ course.description|truncatechars:100 }}</p>
+
+            <div style="margin-top:12px;">
+                <p class="meta"><strong>Длительность:</strong> {{ course.duration_weeks }} нед.</p>
+                <p class="meta"><strong>Цена:</strong> {{ course.price }} ₽</p>
+                {% if course.teacher %}
+                <p class="meta"><strong>Преподаватель:</strong>
+                    <a href="/authors/{{ course.teacher.id }}/" style="color:#2980b9;">
+                        {{ course.teacher.first_name }} {{ course.teacher.last_name }}
+                    </a>
+                </p>
+                {% endif %}
+            </div>
+
+            <div style="margin-top:14px;">
+                <a href="/courses/{{ course.id }}/" class="btn btn-primary">Подробнее →</a>
+            </div>
+        </article>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="alert-empty">
+        <p>⚠️ Курсов пока нет. <a href="/schedule/courses/create/">Добавить первый курс</a>.</p>
+    </div>
+    {% endif %}
+</section>
+{% endblock %}

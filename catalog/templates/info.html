@@ -1,0 +1,29 @@
+{% extends 'base_catalog.html' %}
+
+{% block title %}О сайте — Каталог курсов{% endblock %}
+
+{% block content %}
+<section>
+    <h2 class="page-title">ℹ️ О сайте</h2>
+
+    <div class="detail-block">
+        <p style="line-height:1.7; color:#555; margin-bottom:20px;">
+            Этот сайт создан для изучения Django. Здесь представлен каталог
+            образовательных курсов с возможностью управления данными через административный раздел.
+        </p>
+
+        <h2>Что вы можете делать</h2>
+        <ul style="padding-left:20px; color:#555; line-height:2;">
+            <li>Просматривать доступные курсы и их описания</li>
+            <li>Знакомиться с преподавателями и их специализациями</li>
+            <li>Фильтровать курсы по преподавателю</li>
+        </ul>
+
+        <h2>Для администраторов</h2>
+        <p style="color:#555; line-height:1.7; margin-bottom:16px;">
+            Для добавления и редактирования преподавателей, курсов и студентов перейдите в раздел управления.
+        </p>
+        <a href="/schedule/" class="btn btn-manage">⚙ Перейти к управлению</a>
+    </div>
+</section>
+{% endblock %}

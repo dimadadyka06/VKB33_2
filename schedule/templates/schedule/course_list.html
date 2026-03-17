@@ -1,0 +1,55 @@
+{% extends 'schedule/base.html' %}
+
+{% block title %}Список курсов{% endblock %}
+
+{% block content %}
+<section>
+    <h2 style="margin-bottom:20px;">📖 Курсы</h2>
+
+    <a href="{% url 'course_create' %}" class="btn btn-add" style="margin-bottom:20px; display:inline-block;">+ Добавить курс</a>
+
+    {% if courses %}
+    {% for course in courses %}
+    <article style="background:#fff; border-radius:8px; box-shadow:0 1px 4px rgba(0,0,0,0.1); padding:20px 24px; margin-bottom:16px;">
+        <h3 style="margin-bottom:8px;">
+            <a href="{% url 'schedule_course_detail' course.id %}" style="color:#2c3e50; text-decoration:none;">{{ course.title }}</a>
+        </h3>
+
+        <p style="color:#555; margin-bottom:8px;">{{ course.description|truncatechars:120 }}</p>
+
+        <p style="color:#555; margin-bottom:4px;">
+            🎓 <strong>Уровень:</strong> {{ course.get_level_display }} &nbsp;|&nbsp;
+            ⏱ <strong>Длительность:</strong> {{ course.duration_weeks }} нед. &nbsp;|&nbsp;
+            💰 <strong>Цена:</strong> {{ course.price }} ₽
+        </p>
+
+        {% if course.teacher %}
+        <p style="color:#555; margin-bottom:4px;">
+            👨‍🏫 <strong>Преподаватель:</strong>
+            <a href="{% url 'teacher_detail' course.teacher.id %}" style="color:#2980b9;">
+                {{ course.teacher.last_name }} {{ course.teacher.first_name }}
+            </a>
+        </p>
+        {% else %}
+        <p style="color:#95a5a6; font-style:italic;">Преподаватель не назначен</p>
+        {% endif %}
+
+        <p style="color:#555; margin-bottom:14px;">
+            📅 <strong>Начало:</strong> {{ course.start_date|date:"d.m.Y" }} &nbsp;|&nbsp;
+            <strong>Конец:</strong> {{ course.end_date|date:"d.m.Y" }}
+        </p>
+
+        <div>
+            <a href="{% url 'schedule_course_detail' course.id %}" class="btn btn-edit">Подробнее</a>
+            <a href="{% url 'course_update' course.id %}" class="btn btn-edit" style="background:#3498db;">Изменить</a>
+            <a href="{% url 'course_delete' course.id %}" class="btn btn-delete">Удалить</a>
+        </div>
+    </article>
+    {% endfor %}
+    {% else %}
+    <div class="alert-empty">
+        <p>⚠️ Курсов пока нет. <a href="{% url 'course_create' %}">Добавить первый курс</a>.</p>
+    </div>
+    {% endif %}
+</section>
+{% endblock %}

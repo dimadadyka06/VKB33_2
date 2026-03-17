@@ -1,0 +1,45 @@
+{% extends 'schedule/base.html' %}
+
+{% block title %}Запись на курс{% endblock %}
+
+{% block content %}
+<h2>📝 Запись студента на курс</h2>
+
+<form method="post">
+    {% csrf_token %}
+    
+    <table>
+        <tr>
+            <th><label for="student_id">Студент:</label></th>
+            <td>
+                <select name="student_id" id="student_id" required>
+                    <option value="">-- Выберите студента --</option>
+                    {% for student in students %}
+                        <option value="{{ student.id }}" {% if request.GET.student_id == student.id|stringformat:"s" %}selected{% endif %}>
+                            {{ student.first_name }} {{ student.last_name }} ({{ student.email }})
+                        </option>
+                    {% endfor %}
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <th><label for="course_id">Курс:</label></th>
+            <td>
+                <select name="course_id" id="course_id" required>
+                    <option value="">-- Выберите курс --</option>
+                    {% for course in courses %}
+                        <option value="{{ course.id }}">
+                            {{ course.title }} ({{ course.start_date|date:"d.m.Y" }} - {{ course.end_date|date:"d.m.Y" }})
+                        </option>
+                    {% endfor %}
+                </select>
+            </td>
+        </tr>
+    </table>
+    
+    <p>
+        <button type="submit" class="btn btn-add">✅ Записать</button>
+        <a href="{% url 'schedule_index' %}" class="btn btn-view">Отмена</a>
+    </p>
+</form>
+{% endblock %}

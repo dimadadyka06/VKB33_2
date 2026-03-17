@@ -1,0 +1,39 @@
+{% extends 'schedule/base.html' %}
+
+{% block title %}Список студентов{% endblock %}
+
+{% block content %}
+<h2>🎓 Список студентов</h2>
+
+
+{% if students %}
+    <table>
+        <thead>
+            <tr>
+                <th>Имя</th>
+                <th>Фамилия</th>
+                <th>Email</th>
+                <th>Статус</th>
+                <th>Дата регистрации</th>
+                <th>Действия</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for student in students %}
+            <tr>
+                <td>{{ student.first_name }}</td>
+                <td>{{ student.last_name }}</td>
+                <td>{{ student.email }}</td>
+                <td>{{ student.get_status_display }}</td>
+                <td>{{ student.enrolled_date|date:"d.m.Y" }}</td>
+                <td>
+                    <a href="{% url 'student_detail' student.id %}" class="btn btn-view">👁️ Просмотр</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% else %}
+    <p>Пока нет студентов. <a href="{% url 'student_create' %}">Добавить первого студента</a></p>
+{% endif %}
+{% endblock %}

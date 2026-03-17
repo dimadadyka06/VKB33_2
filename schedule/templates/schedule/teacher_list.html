@@ -1,0 +1,47 @@
+{% extends 'schedule/base.html' %}
+
+{% block title %}Список преподавателей{% endblock %}
+
+{% block content %}
+<section>
+    <h2 style="margin-bottom: 20px;">👨‍🏫 Преподаватели</h2>
+
+    <a href="{% url 'teacher_create' %}" class="btn btn-add" style="margin-bottom: 20px; display: inline-block;">+ Добавить преподавателя</a>
+
+    {% if teachers %}
+        {% for teacher in teachers %}
+        <article style="background:#fff; border-radius:8px; box-shadow:0 1px 4px rgba(0,0,0,0.1); padding:20px 24px; margin-bottom:16px;">
+            <h3 style="margin-bottom:8px;">{{ teacher.last_name }} {{ teacher.first_name }}</h3>
+            <p style="color:#555; margin-bottom:6px;">📧 <strong>Email:</strong> {{ teacher.email }}</p>
+            {% if teacher.specialization %}
+                <p style="color:#555; margin-bottom:6px;">🎓 <strong>Специализация:</strong> {{ teacher.specialization }}</p>
+            {% endif %}
+            <p style="color:#555; margin-bottom:10px;">🕐 <strong>Опыт:</strong> {{ teacher.experience_years }} лет</p>
+
+            {% with courses=teacher.courses.all %}
+            {% if courses %}
+                <p style="font-weight:600; margin-bottom:6px;">📚 Курсы:</p>
+                <ul style="padding-left:20px; color:#2c3e50;">
+                    {% for course in courses %}
+                    <li><a href="{% url 'schedule_course_detail' course.id %}" style="color:#2980b9;">{{ course.title }}</a></li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p style="color:#95a5a6; font-style:italic;">Курсы не назначены</p>
+            {% endif %}
+            {% endwith %}
+
+            <div style="margin-top:14px;">
+                <a href="{% url 'teacher_detail' teacher.id %}" class="btn btn-edit">Подробнее</a>
+                <a href="{% url 'teacher_update' teacher.id %}" class="btn btn-edit" style="background:#3498db;">Изменить</a>
+                <a href="{% url 'teacher_delete' teacher.id %}" class="btn btn-delete">Удалить</a>
+            </div>
+        </article>
+        {% endfor %}
+    {% else %}
+        <div class="alert-empty">
+            <p>⚠️ Преподаватели пока не добавлены. <a href="{% url 'teacher_create' %}">Добавить первого преподавателя</a>.</p>
+        </div>
+    {% endif %}
+</section>
+{% endblock %}

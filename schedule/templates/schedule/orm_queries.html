@@ -1,0 +1,50 @@
+{% extends 'schedule/base.html' %}
+
+{% block title %}ORM-запросы{% endblock %}
+
+{% block content %}
+<h2>🔍 Демонстрация ORM-запросов</h2>
+
+<h3>1. Все студенты курса (ID=1)</h3>
+{% if results.course_students %}
+    <p><strong>Курс:</strong> {{ results.course_students.course.title }}</p>
+    <ul>
+    {% for student in results.course_students.students %}
+        <li>{{ student.first_name }} {{ student.last_name }} - {{ student.email }}</li>
+    {% empty %}
+        <li>Нет студентов на этом курсе</li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>Курс с ID=1 не найден</p>
+{% endif %}
+
+<h3>2. Преподаватели с количеством курсов больше 1</h3>
+<ul>
+{% for teacher in results.teachers_with_many_courses %}
+    <li>{{ teacher.first_name }} {{ teacher.last_name }} - {{ teacher.course_count }} курсов</li>
+{% empty %}
+    <li>Нет таких преподавателей</li>
+{% endfor %}
+</ul>
+
+<h3>3. Студенты без курсов</h3>
+<ul>
+{% for student in results.students_without_courses %}
+    <li>{{ student.first_name }} {{ student.last_name }} - {{ student.email }}</li>
+{% empty %}
+    <li>Все студенты записаны на курсы</li>
+{% endfor %}
+</ul>
+
+<h3>4. Преподаватели без профиля</h3>
+<ul>
+{% for teacher in results.teachers_without_profile %}
+    <li>{{ teacher.first_name }} {{ teacher.last_name }} - {{ teacher.email }}</li>
+{% empty %}
+    <li>У всех преподавателей есть профиль</li>
+{% endfor %}
+</ul>
+
+<p><a href="{% url 'schedule_index' %}">← Назад</a></p>
+{% endblock %}

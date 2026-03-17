@@ -1,0 +1,59 @@
+{% extends 'base_catalog.html' %}
+
+{% block title %}{{ author.first_name }} {{ author.last_name }} — Каталог курсов{% endblock %}
+
+{% block content %}
+<section>
+    <div class="detail-block">
+        <h2 class="page-title" style="margin-bottom:6px;">
+            {{ author.last_name }} {{ author.first_name }}
+        </h2>
+        {% if author.specialization %}
+        <p style="color:#e67e22; font-size:0.95rem; margin-bottom:18px;">🎓 {{ author.specialization }}</p>
+        {% endif %}
+
+        <h2>Контакты</h2>
+        <div class="detail-row"><span class="label">Email:</span><span>{{ author.email }}</span></div>
+        {% if author.phone %}
+        <div class="detail-row"><span class="label">Телефон:</span><span>{{ author.phone }}</span></div>
+        {% endif %}
+        <div class="detail-row"><span class="label">Опыт работы:</span><span>{{ author.experience_years }} лет</span></div>
+
+        {% if author.info %}
+        <h2>Об авторе</h2>
+        {% if author.info.education %}
+        <div class="detail-row"><span class="label">Образование:</span><span>{{ author.info.education }}</span></div>
+        {% endif %}
+        {% if author.info.bio %}
+        <p style="color:#555; line-height:1.7; margin-top:8px;">{{ author.info.bio }}</p>
+        {% endif %}
+        {% endif %}
+
+        <h2>Курсы преподавателя</h2>
+        {% if courses %}
+            {% for course in courses %}
+            <article class="card" style="margin-bottom:12px;">
+                <h3><a href="/courses/{{ course.id }}/">{{ course.title }}</a></h3>
+                <div style="margin:6px 0;">
+                    {% if course.level == 'beginner' %}
+                        <span class="badge badge-beginner">Начинающий</span>
+                    {% elif course.level == 'intermediate' %}
+                        <span class="badge badge-intermediate">Средний</span>
+                    {% else %}
+                        <span class="badge badge-advanced">Продвинутый</span>
+                    {% endif %}
+                </div>
+                <p class="meta">{{ course.description|truncatechars:90 }}</p>
+                <p class="meta" style="margin-top:6px;"><strong>Цена:</strong> {{ course.price }} ₽ &nbsp;|&nbsp; <strong>Длительность:</strong> {{ course.duration_weeks }} нед.</p>
+            </article>
+            {% endfor %}
+        {% else %}
+            <p style="color:#95a5a6; font-style:italic;">У преподавателя пока нет курсов.</p>
+        {% endif %}
+
+        <div style="margin-top:22px;">
+            <a href="/authors/" class="btn btn-back">← Все преподаватели</a>
+        </div>
+    </div>
+</section>
+{% endblock %}

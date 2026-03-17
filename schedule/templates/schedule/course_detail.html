@@ -1,0 +1,72 @@
+{% extends 'schedule/base.html' %}
+
+{% block title %}{{ course.title }}{% endblock %}
+
+{% block content %}
+<h2>{{ course.title }}</h2>
+
+<p><a href="{% url 'schedule_course_list' %}">← Назад к списку</a></p>
+
+<table>
+    <tr>
+        <th>Название:</th>
+        <td>{{ course.title }}</td>
+    </tr>
+    <tr>
+        <th>Описание:</th>
+        <td>{{ course.description }}</td>
+    </tr>
+    <tr>
+        <th>Преподаватель:</th>
+        <td>
+            {% if course.teacher %}
+                <a href="{% url 'teacher_detail' course.teacher.id %}">
+                    {{ course.teacher.first_name }} {{ course.teacher.last_name }}
+                </a>
+            {% else %}
+                Не назначен
+            {% endif %}
+        </td>
+    </tr>
+    <tr>
+        <th>Уровень:</th>
+        <td>{{ course.get_level_display }}</td>
+    </tr>
+    <tr>
+        <th>Длительность:</th>
+        <td>{{ course.duration_weeks }} недель</td>
+    </tr>
+    <tr>
+        <th>Цена:</th>
+        <td>{{ course.price }} ₽</td>
+    </tr>
+    <tr>
+        <th>Дата начала:</th>
+        <td>{{ course.start_date|date:"d.m.Y" }}</td>
+    </tr>
+    <tr>
+        <th>Дата окончания:</th>
+        <td>{{ course.end_date|date:"d.m.Y" }}</td>
+    </tr>
+    <tr>
+        <th>Макс. студентов:</th>
+        <td>{{ course.max_students }}</td>
+    </tr>
+</table>
+
+<h3>🎓 Студенты на курсе ({{ students_count }})</h3>
+{% if students %}
+    <ul>
+    {% for student in students %}
+        <li><a href="{% url 'student_detail' student.id %}">{{ student.first_name }} {{ student.last_name }}</a></li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>На курс пока никто не записан.</p>
+{% endif %}
+
+<p>
+    <a href="{% url 'course_update' course.id %}" class="btn btn-edit">✏️ Редактировать</a>
+    <a href="{% url 'course_delete' course.id %}" class="btn btn-delete">🗑️ Удалить</a>
+</p>
+{% endblock %}

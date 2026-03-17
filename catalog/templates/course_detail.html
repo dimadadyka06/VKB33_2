@@ -1,0 +1,45 @@
+{% extends 'base_catalog.html' %}
+
+{% block title %}{{ course.title }} — Каталог курсов{% endblock %}
+
+{% block content %}
+<section>
+    <div class="detail-block">
+        <div style="margin-bottom:16px;">
+            {% if course.level == 'beginner' %}
+                <span class="badge badge-beginner">Начинающий</span>
+            {% elif course.level == 'intermediate' %}
+                <span class="badge badge-intermediate">Средний</span>
+            {% else %}
+                <span class="badge badge-advanced">Продвинутый</span>
+            {% endif %}
+        </div>
+
+        <h2 class="page-title" style="margin-bottom:18px;">{{ course.title }}</h2>
+
+        <p style="color:#555; line-height:1.7; margin-bottom:20px;">{{ course.description }}</p>
+
+        <h2>Информация о курсе</h2>
+        <div class="detail-row"><span class="label">Длительность:</span><span>{{ course.duration_weeks }} недель</span></div>
+        <div class="detail-row"><span class="label">Цена:</span><span>{{ course.price }} ₽</span></div>
+        <div class="detail-row"><span class="label">Дата начала:</span><span>{{ course.start_date }}</span></div>
+        <div class="detail-row"><span class="label">Дата окончания:</span><span>{{ course.end_date }}</span></div>
+        <div class="detail-row"><span class="label">Макс. студентов:</span><span>{{ course.max_students }}</span></div>
+
+        {% if teacher %}
+        <h2>Преподаватель</h2>
+        <div class="card" style="margin-top:0;">
+            <h3><a href="/authors/{{ teacher.id }}/">{{ teacher.first_name }} {{ teacher.last_name }}</a></h3>
+            {% if teacher.specialization %}
+            <p class="meta">🎓 {{ teacher.specialization }}</p>
+            {% endif %}
+            <p class="meta">📧 {{ teacher.email }}</p>
+        </div>
+        {% endif %}
+
+        <div style="margin-top:20px;">
+            <a href="/courses/" class="btn btn-back">← Все курсы</a>
+        </div>
+    </div>
+</section>
+{% endblock %}

@@ -1,0 +1,22 @@
+{% extends 'schedule/base.html' %}
+
+{% block title %}Удалить курс{% endblock %}
+
+{% block content %}
+<section>
+    <div class="form-card">
+        <h2 style="color:#e74c3c;">🗑️ Удалить курс</h2>
+        <p style="margin:16px 0; color:#555;">
+            Вы уверены, что хотите удалить курс <strong>«{{ course.title }}»</strong>?<br>
+            Это действие нельзя отменить.
+        </p>
+        <form method="post">
+            {% csrf_token %}
+            <div style="display:flex; gap:12px;">
+                <button type="submit" class="btn btn-delete">Да, удалить</button>
+                <a href="{% url 'schedule_course_list' %}" class="btn btn-back">Отмена</a>
+            </div>
+        </form>
+    </div>
+</section>
+{% endblock %}

@@ -1,0 +1,45 @@
+{% extends 'schedule/base.html' %}
+
+{% block title %}Добавить преподавателя{% endblock %}
+
+{% block content %}
+<section>
+    <div class="form-card">
+        <h2>👨‍🏫 Добавить преподавателя</h2>
+
+        <form method="post">
+            {% csrf_token %}
+
+            {% for field in form %}
+            <div class="form-group">
+                <label for="{{ field.id_for_label }}">{{ field.label }}{% if field.field.required %} <span style="color:#070707;">*</span>{% endif %}</label>
+                {{ field }}
+                {% if field.help_text %}
+                    <div class="helptext">{{ field.help_text }}</div>
+                {% endif %}
+                {% if field.errors %}
+                    <ul class="errorlist">
+                        {% for error in field.errors %}
+                        <li>{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            </div>
+            {% endfor %}
+
+            {% if form.non_field_errors %}
+            <div style="color:#e74c3c; margin-bottom:12px;">
+                {% for error in form.non_field_errors %}
+                    <p>{{ error }}</p>
+                {% endfor %}
+            </div>
+            {% endif %}
+
+            <div style="display:flex; gap:12px; margin-top:8px;">
+                <button type="submit" class="btn btn-add">Сохранить</button>
+                <a href="{% url 'teacher_list' %}" class="btn btn-back">Отмена</a>
+            </div>
+        </form>
+    </div>
+</section>
+{% endblock %}
