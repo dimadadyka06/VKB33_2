@@ -4,12 +4,32 @@ from django.core.validators import MinValueValidator, MaxValueValidator
 
 # Модель Teacher (Преподаватель)
 class Teacher(models.Model):
+    DEGREE_CHOICES = [
+        ('none', 'Без степени'),
+        ('bachelor', 'Бакалавр'),
+        ('master', 'Магистр'),
+        ('phd', 'Кандидат наук'),
+        ('doctor', 'Доктор наук'),
+    ]
+
     first_name = models.CharField(max_length=100, verbose_name="Имя")
     last_name = models.CharField(max_length=100, verbose_name="Фамилия")
     email = models.EmailField(unique=True, verbose_name="Email")
     phone = models.CharField(max_length=20, verbose_name="Телефон")
     specialization = models.CharField(max_length=200, blank=True, verbose_name="Специализация")
     experience_years = models.IntegerField(default=0, verbose_name="Лет опыта")
+    # Новые поля
+    degree = models.CharField(
+        max_length=20, choices=DEGREE_CHOICES, default='none',
+        verbose_name="Учёная степень"
+    )
+    hourly_rate = models.DecimalField(
+        max_digits=8, decimal_places=2, default=0,
+        validators=[MinValueValidator(0)],
+        verbose_name="Ставка (руб/час)"
+    )
+    is_active = models.BooleanField(default=True, verbose_name="Активен")
+    website = models.URLField(blank=True, verbose_name="Сайт/Портфолио")
 
     def __str__(self):
         return f"{self.first_name} {self.last_name}"
@@ -51,7 +71,7 @@ class Course(models.Model):   # 1 К N
 
     teacher = models.ForeignKey(
         Teacher,
-        on_delete=models.SET_NULL, #При удалении преподавателя, в курсах поле teacher становится пустым (NULL)
+        on_delete=models.SET_NULL,
         null=True,
         blank=True,
         related_name='courses',
@@ -64,6 +84,17 @@ class Course(models.Model):   # 1 К N
     start_date = models.DateField(verbose_name="Дата начала")
     end_date = models.DateField(verbose_name="Дата окончания")
     max_students = models.IntegerField(default=10, verbose_name="Макс. студентов")
+    # Новые поля
+    language = models.CharField(
+        max_length=50, default='Русский',
+        verbose_name="Язык обучения"
+    )
+    is_published = models.BooleanField(default=False, verbose_name="Опубликован")
+    rating = models.DecimalField(
+        max_digits=3, decimal_places=1, default=0,
+        validators=[MinValueValidator(0), MaxValueValidator(10)],
+        verbose_name="Рейтинг (0–10)"
+    )
 
     def __str__(self):
         return self.title
@@ -87,6 +118,13 @@ class Student(models.Model):
     birth_date = models.DateField(null=True, blank=True, verbose_name="Дата рождения")
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='active', verbose_name="Статус")
     enrolled_date = models.DateField(auto_now_add=True, verbose_name="Дата регистрации")
+    # Новые поля
+    city = models.CharField(max_length=100, blank=True, verbose_name="Город")
+    gpa = models.DecimalField(
+        max_digits=4, decimal_places=2, null=True, blank=True,
+        validators=[MinValueValidator(0), MaxValueValidator(5)],
+        verbose_name="Средний балл (GPA, 0–5)"
+    )
 
     def __str__(self):
         return f"{self.first_name} {self.last_name}"
