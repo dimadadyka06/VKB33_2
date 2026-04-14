@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% block title %}Пользователи{% endblock %}
+{% block content %}
+<div class="page-header">
+    <h1>👥 Все пользователи</h1>
+    <p>Найдите новых друзей</p>
+</div>
+
+<div class="users-grid">
+    {% for item in users %}
+    <div class="user-card-item">
+        <div class="user-card-avatar">{{ item.user.username|first|upper }}</div>
+        <div class="user-card-info">
+            <h3>{{ item.user.get_full_name|default:item.user.username }}</h3>
+            <p class="username-tag">@{{ item.user.username }}</p>
+            {% if item.user.bio %}<p class="bio-preview">{{ item.user.bio|truncatechars:60 }}</p>{% endif %}
+        </div>
+        <div class="user-card-actions">
+            {% if item.is_friend %}
+                <a href="{% url 'profile' username=item.user.username %}" class="btn btn-outline btn-sm">👤 Профиль</a>
+                <span class="badge-friend">✓ Друг</span>
+            {% elif item.has_sent %}
+                <span class="badge-pending">⏳ Заявка отправлена</span>
+            {% else %}
+                <form method="post" action="{% url 'send_friend_request' item.user.username %}" style="display:inline">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-primary btn-sm">➕ Добавить</button>
+                </form>
+            {% endif %}
+        </div>
+    </div>
+    {% empty %}
+        <p class="empty-state">Пока нет других пользователей</p>
+    {% endfor %}
+</div>
+{% endblock %}

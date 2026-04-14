@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block title %}Редактирование профиля{% endblock %}
+{% block content %}
+<div class="auth-wrapper">
+    <div class="auth-card" style="max-width:500px">
+        <div class="auth-header">
+            <span class="auth-icon">✏️</span>
+            <h2>Редактировать профиль</h2>
+        </div>
+        <form method="post">
+            {% csrf_token %}
+            {% for field in form %}
+                <div class="form-group">
+                    <label>{{ field.label }}</label>
+                    {{ field }}
+                    {% if field.errors %}
+                        {% for error in field.errors %}<span class="field-error">{{ error }}</span>{% endfor %}
+                    {% endif %}
+                </div>
+            {% endfor %}
+            <button type="submit" class="btn btn-primary btn-block">Сохранить</button>
+        </form>
+        <div class="auth-footer">
+            <a href="{% url 'profile' username=request.user.username %}">← Назад к профилю</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

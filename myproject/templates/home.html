@@ -1,26 +1,24 @@
 {% extends 'base.html' %}
-
 {% block title %}Главная{% endblock %}
-
 {% block content %}
 <div class="hero">
     {% if user.is_authenticated %}
         <h1>Привет, {{ user.username }}! 👋</h1>
-        <p class="hero-sub">Вы успешно вошли в систему.</p>
-        <div class="user-card">
+        <p class="hero-sub">Добро пожаловать в социальную сеть</p>
+        <div class="user-card" style="margin: 1.5rem auto; display:inline-block;">
             <div class="user-info">
-                <p><strong>Имя пользователя:</strong> {{ user.username }}</p>
                 <p><strong>Email:</strong> {{ user.email|default:"не указан" }}</p>
-                <p><strong>Дата регистрации:</strong> {{ user.date_joined|date:"d.m.Y" }}</p>
-                <p><strong>Последний вход:</strong> {{ user.last_login|date:"d.m.Y H:i" }}</p>
+                {% if user.phone %}<p><strong>Телефон:</strong> {{ user.phone }}</p>{% endif %}
+                <p><strong>Друзей:</strong> {{ user.friends.count }}</p>
             </div>
         </div>
         <div class="actions">
-            <a href="{% url 'password_change' %}" class="btn btn-outline">🔑 Сменить пароль</a>
+            <a href="{% url 'profile' username=user.username %}" class="btn btn-primary">👤 Мой профиль</a>
+            <a href="{% url 'user_list' %}" class="btn btn-outline">👥 Все пользователи</a>
         </div>
     {% else %}
         <h1>Добро пожаловать! 🎉</h1>
-        <p class="hero-sub">Войдите в систему или создайте новый аккаунт</p>
+        <p class="hero-sub">Войдите или создайте аккаунт чтобы начать</p>
         <div class="actions">
             <a href="{% url 'login' %}" class="btn btn-primary">Войти</a>
             <a href="{% url 'register' %}" class="btn btn-outline">Регистрация</a>

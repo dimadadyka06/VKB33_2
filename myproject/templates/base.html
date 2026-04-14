@@ -10,12 +10,14 @@
 <body>
     <nav class="navbar">
         <div class="nav-brand">
-            <a href="{% url 'home' %}">🏠 Мой сайт</a>
+            <a href="{% url 'home' %}">🏠 Социалка</a>
         </div>
         <div class="nav-links">
             {% if user.is_authenticated %}
-                <span class="nav-user">👤 {{ user.username }}</span>
-                <a href="{% url 'password_change' %}" class="btn btn-outline">Сменить пароль</a>
+                <a href="{% url 'user_list' %}" class="nav-link">👥 Пользователи</a>
+                <a href="{% url 'incoming_requests' %}" class="nav-link">📩 Заявки</a>
+                <a href="{% url 'profile' username=user.username %}" class="nav-link">👤 {{ user.username }}</a>
+                <a href="{% url 'password_change' %}" class="btn btn-outline">🔑 Пароль</a>
                 <form method="post" action="{% url 'logout' %}" style="display:inline">
                     {% csrf_token %}
                     <button type="submit" class="btn btn-danger">Выйти</button>
@@ -33,7 +35,6 @@
                 <div class="alert alert-{{ message.tags }}">{{ message }}</div>
             {% endfor %}
         {% endif %}
-
         {% block content %}{% endblock %}
     </div>
 </body>

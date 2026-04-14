@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% block title %}{{ profile_user.username }}{% endblock %}
+{% block content %}
+<div class="profile-wrapper">
+    <div class="profile-card">
+        <div class="profile-avatar">{{ profile_user.username|first|upper }}</div>
+        <h2>{{ profile_user.get_full_name|default:profile_user.username }}</h2>
+        <p class="profile-username">@{{ profile_user.username }}</p>
+
+        {% if profile_user.bio %}
+            <p class="profile-bio">{{ profile_user.bio }}</p>
+        {% endif %}
+
+        <div class="profile-details">
+            {% if profile_user.email %}
+                <div class="detail-item">📧 {{ profile_user.email }}</div>
+            {% endif %}
+            {% if profile_user.phone %}
+                <div class="detail-item">📱 {{ profile_user.phone }}</div>
+            {% endif %}
+            <div class="detail-item">📅 На сайте с {{ profile_user.date_joined|date:"d.m.Y" }}</div>
+        </div>
+
+        <div class="profile-stats">
+            <div class="stat">
+                <span class="stat-num">{{ profile_user.friends.count }}</span>
+                <span class="stat-label">Друзей</span>
+            </div>
+        </div>
+
+        <div class="profile-actions">
+            {% if is_owner %}
+                <a href="{% url 'profile_edit' %}" class="btn btn-primary">✏️ Редактировать</a>
+                <a href="{% url 'incoming_requests' %}" class="btn btn-outline">📩 Заявки в друзья</a>
+            {% elif is_friend %}
+                <form method="post" action="{% url 'remove_friend' profile_user.username %}">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-danger">❌ Удалить из друзей</button>
+                </form>
+            {% endif %}
+        </div>
+
+        {% if is_owner and profile_user.friends.count > 0 %}
+        <div class="friends-list">
+            <h3>Друзья</h3>
+            <div class="friends-grid">
+                {% for friend in profile_user.friends.all %}
+                <a href="{% url 'profile' username=friend.username %}" class="friend-chip">
+                    <span class="friend-avatar">{{ friend.username|first|upper }}</span>
+                    {{ friend.username }}
+                </a>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

@@ -6,5 +6,6 @@ from .models import User
 @admin.register(User)
 class CustomUserAdmin(UserAdmin):
     fieldsets = UserAdmin.fieldsets + (
-        ('Дополнительно', {'fields': ('bio',)}),
+        ('Дополнительно', {'fields': ('bio', 'phone', 'friends', 'friend_requests')}),
     )
+    list_display = ('username', 'email', 'phone', 'is_staff')
