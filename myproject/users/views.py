@@ -49,7 +49,12 @@ def profile(request, username):
     is_friend = request.user.is_friend(profile_user)
     has_sent = request.user.has_sent_request(profile_user)
 
-
+    # Если это не владелец и не друг — показываем страницу "профиль скрыт"
+    if not is_owner and not is_friend:
+        return render(request, 'users/profile_private.html', {
+            'profile_user': profile_user,
+            'has_sent': has_sent,
+        })
 
     return render(request, 'users/profile.html', {
         'profile_user': profile_user,
@@ -80,7 +85,7 @@ def send_friend_request(request, username):
     if to_user != request.user and not request.user.is_friend(to_user):
         request.user.friend_requests.add(to_user)
         messages.success(request, f'Заявка отправлена пользователю {to_user.username}!')
-    return redirect('user_list')
+    return redirect('profile', username=to_user.username)
 
 
 @login_required

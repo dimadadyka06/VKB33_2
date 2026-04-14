@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% block title %}Профиль скрыт — {{ profile_user.username }}{% endblock %}
+{% block content %}
+<div class="profile-wrapper">
+    <div class="profile-card" style="text-align: center;">
+        <div class="profile-avatar" style="background: #9ca3af;">🔒</div>
+        <h2>@{{ profile_user.username }}</h2>
+        <p class="profile-username" style="color: #6b7280; margin-top: 0.5rem;">
+            Этот профиль скрыт
+        </p>
+
+        <div style="margin: 2rem 0; padding: 1.5rem; background: #f3f4f6; border-radius: 12px;">
+            <p style="color: #374151; font-size: 1rem; margin-bottom: 0;">
+                🔐 Вы можете просматривать профиль только своих друзей.<br>
+                Отправьте заявку в друзья, чтобы увидеть профиль <strong>{{ profile_user.username }}</strong>.
+            </p>
+        </div>
+
+        <div class="profile-actions" style="justify-content: center;">
+            {% if has_sent %}
+                <button class="btn btn-outline" disabled>✅ Заявка отправлена</button>
+            {% else %}
+                <form method="post" action="{% url 'send_friend_request' profile_user.username %}">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-primary">➕ Отправить заявку в друзья</button>
+                </form>
+            {% endif %}
+            <a href="{% url 'user_list' %}" class="btn btn-outline">← Назад к пользователям</a>
+        </div>
+    </div>
+</div>
+{% endblock %}
