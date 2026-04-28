@@ -1,0 +1,9 @@
+[2026-04-28 10:33:37] WARNING  users.views (views.register:37) process=13344 thread=8908 — Registration validation error: field=username error=Пользователь с таким именем уже существует. data_username=Cheez1c
+[2026-04-28 10:33:37] WARNING  users.views (views.register:37) process=13344 thread=8908 — Registration validation error: field=email error=Пользователь с таким Email уже существует. data_username=Cheez1c
+[2026-04-28 10:34:30] INFO     users.signals (signals.on_user_logged_in:14) process=17672 thread=14312 — User logged in successfully: username=vkb33 ip=127.0.0.1
+[2026-04-28 10:36:19] INFO     users.views (views.profile_edit:104) process=17672 thread=14312 — User vkb33 updated their profile
+[2026-04-28 10:36:45] ERROR    users.views (views.profile_edit:120) process=17672 thread=14312 — Non-image file upload attempt by user vkb33: filename=тест.txt error=Загрузите правильное изображение. Файл, который вы загрузили, поврежден или не является изображением.
+NoneType: None
+[2026-04-28 10:37:32] WARNING  users.signals (signals.on_user_login_failed:23) process=17672 thread=14312 — Failed login attempt: username=Cheez1c ip=127.0.0.1
+[2026-04-28 10:37:40] INFO     users.signals (signals.on_user_logged_in:14) process=17672 thread=14312 — User logged in successfully: username=Cheez1c ip=127.0.0.1
+[2026-04-28 10:37:57] INFO     users.views (views.accept_friend_request:170) process=17672 thread=14312 — Friend request accepted: user=Cheez1c accepted request from=vkb33

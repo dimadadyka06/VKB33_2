@@ -1,0 +1,98 @@
+[2026-04-28 10:26:43] WARNING  django.request (log.log_response:253) process=13344 thread=5152 — Not Found: /favicon.ico
+[2026-04-28 10:26:43] WARNING  django.server (basehttp.log_message:213) process=13344 thread=5152 — "GET /favicon.ico HTTP/1.1" 404 4993
+[2026-04-28 10:33:37] WARNING  users.views (views.register:37) process=13344 thread=8908 — Registration validation error: field=username error=Пользователь с таким именем уже существует. data_username=Cheez1c
+[2026-04-28 10:33:37] WARNING  users.views (views.register:37) process=13344 thread=8908 — Registration validation error: field=email error=Пользователь с таким Email уже существует. data_username=Cheez1c
+[2026-04-28 10:33:43] ERROR    django.request (log.log_response:253) process=13344 thread=8908 — Internal Server Error: /auth/login/
+Traceback (most recent call last):
+  File "C:\Users\dimad\PycharmProjects\pythonProject\venv\lib\site-packages\django\db\backends\utils.py", line 105, in _execute
+    return self.cursor.execute(sql, params)
+  File "C:\Users\dimad\PycharmProjects\pythonProject\venv\lib\site-packages\django\db\backends\sqlite3\base.py", line 360, in execute
+    return super().execute(query, params)
+sqlite3.OperationalError: no such column: users_user.avatar
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\dimad\PycharmProjects\pythonProject\venv\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\dimad\PycharmProjects\pythonProject\venv\lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\dimad\PycharmProjects\pythonProject\venv\lib\site-packages\django\views\generic\base.py", line 105, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "C:\Users\dimad\PycharmProjects\pythonProject\venv\lib\site-packages\django\utils\decorators.py", line 48, in _wrapper
+    return bound_method(*args, **kwargs)
+  File "C:\Users\dimad\PycharmProjects\pythonProject\venv\lib\site-packages\django\utils\decorators.py", line 48, in _wrapper
+    return bound_method(*args, **kwargs)
+  File "C:\Users\dimad\PycharmProjects\pythonProject\venv\lib\site-packages\django\views\decorators\debug.py", line 143, in sensitive_post_parameters_wrapper
+    return view(request, *args, **kwargs)
+  File "C:\Users\dimad\PycharmProjects\pythonProject\venv\lib\site-packages\django\utils\decorators.py", line 48, in _wrapper
+    return bound_method(*args, **kwargs)
+  File "C:\Users\dimad\PycharmProjects\pythonProject\venv\lib\site-packages\django\utils\decorators.py", line 192, in _view_wrapper
+    result = _process_exception(request, e)
+  File "C:\Users\dimad\PycharmProjects\pythonProject\venv\lib\site-packages\django\utils\decorators.py", line 190, in _view_wrapper
+    response = view_func(request, *args, **kwargs)
+  File "C:\Users\dimad\PycharmProjects\pythonProject\venv\lib\site-packages\django\utils\decorators.py", line 48, in _wrapper
+    return bound_method(*args, **kwargs)
+  File "C:\Users\dimad\PycharmProjects\pythonProject\venv\lib\site-packages\django\views\decorators\cache.py", line 80, in _view_wrapper
+    response = view_func(request, *args, **kwargs)
+  File "C:\Users\dimad\PycharmProjects\pythonProject\venv\lib\site-packages\django\contrib\auth\views.py", line 89, in dispatch
+    return super().dispatch(request, *args, **kwargs)
+  File "C:\Users\dimad\PycharmProjects\pythonProject\venv\lib\site-packages\django\views\generic\base.py", line 144, in dispatch
+    return handler(request, *args, **kwargs)
+  File "C:\Users\dimad\PycharmProjects\pythonProject\venv\lib\site-packages\django\views\generic\edit.py", line 150, in post
+    if form.is_valid():
+  File "C:\Users\dimad\PycharmProjects\pythonProject\venv\lib\site-packages\django\forms\forms.py", line 206, in is_valid
+    return self.is_bound and not self.errors
+  File "C:\Users\dimad\PycharmProjects\pythonProject\venv\lib\site-packages\django\forms\forms.py", line 201, in errors
+    self.full_clean()
+  File "C:\Users\dimad\PycharmProjects\pythonProject\venv\lib\site-packages\django\forms\forms.py", line 338, in full_clean
+    self._clean_form()
+  File "C:\Users\dimad\PycharmProjects\pythonProject\venv\lib\site-packages\django\forms\forms.py", line 354, in _clean_form
+    cleaned_data = self.clean()
+  File "C:\Users\dimad\PycharmProjects\pythonProject\venv\lib\site-packages\django\views\decorators\debug.py", line 75, in sensitive_variables_wrapper
+    return func(*func_args, **func_kwargs)
+  File "C:\Users\dimad\PycharmProjects\pythonProject\venv\lib\site-packages\django\contrib\auth\forms.py", line 366, in clean
+    self.user_cache = authenticate(
+  File "C:\Users\dimad\PycharmProjects\pythonProject\venv\lib\site-packages\django\views\decorators\debug.py", line 75, in sensitive_variables_wrapper
+    return func(*func_args, **func_kwargs)
+  File "C:\Users\dimad\PycharmProjects\pythonProject\venv\lib\site-packages\django\contrib\auth\__init__.py", line 114, in authenticate
+    user = backend.authenticate(request, **credentials)
+  File "C:\Users\dimad\PycharmProjects\pythonProject\venv\lib\site-packages\django\contrib\auth\backends.py", line 65, in authenticate
+    user = UserModel._default_manager.get_by_natural_key(username)
+  File "C:\Users\dimad\PycharmProjects\pythonProject\venv\lib\site-packages\django\contrib\auth\base_user.py", line 37, in get_by_natural_key
+    return self.get(**{self.model.USERNAME_FIELD: username})
+  File "C:\Users\dimad\PycharmProjects\pythonProject\venv\lib\site-packages\django\db\models\manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "C:\Users\dimad\PycharmProjects\pythonProject\venv\lib\site-packages\django\db\models\query.py", line 631, in get
+    num = len(clone)
+  File "C:\Users\dimad\PycharmProjects\pythonProject\venv\lib\site-packages\django\db\models\query.py", line 368, in __len__
+    self._fetch_all()
+  File "C:\Users\dimad\PycharmProjects\pythonProject\venv\lib\site-packages\django\db\models\query.py", line 1954, in _fetch_all
+    self._result_cache = list(self._iterable_class(self))
+  File "C:\Users\dimad\PycharmProjects\pythonProject\venv\lib\site-packages\django\db\models\query.py", line 93, in __iter__
+    results = compiler.execute_sql(
+  File "C:\Users\dimad\PycharmProjects\pythonProject\venv\lib\site-packages\django\db\models\sql\compiler.py", line 1623, in execute_sql
+    cursor.execute(sql, params)
+  File "C:\Users\dimad\PycharmProjects\pythonProject\venv\lib\site-packages\django\db\backends\utils.py", line 122, in execute
+    return super().execute(sql, params)
+  File "C:\Users\dimad\PycharmProjects\pythonProject\venv\lib\site-packages\django\db\backends\utils.py", line 79, in execute
+    return self._execute_with_wrappers(
+  File "C:\Users\dimad\PycharmProjects\pythonProject\venv\lib\site-packages\django\db\backends\utils.py", line 92, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+  File "C:\Users\dimad\PycharmProjects\pythonProject\venv\lib\site-packages\django\db\backends\utils.py", line 100, in _execute
+    with self.db.wrap_database_errors:
+  File "C:\Users\dimad\PycharmProjects\pythonProject\venv\lib\site-packages\django\db\utils.py", line 91, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "C:\Users\dimad\PycharmProjects\pythonProject\venv\lib\site-packages\django\db\backends\utils.py", line 105, in _execute
+    return self.cursor.execute(sql, params)
+  File "C:\Users\dimad\PycharmProjects\pythonProject\venv\lib\site-packages\django\db\backends\sqlite3\base.py", line 360, in execute
+    return super().execute(query, params)
+django.db.utils.OperationalError: no such column: users_user.avatar
+[2026-04-28 10:33:43] ERROR    django.server (basehttp.log_message:213) process=13344 thread=8908 — "POST /auth/login/ HTTP/1.1" 500 240313
+[2026-04-28 10:34:30] INFO     users.signals (signals.on_user_logged_in:14) process=17672 thread=14312 — User logged in successfully: username=vkb33 ip=127.0.0.1
+[2026-04-28 10:36:19] INFO     users.views (views.profile_edit:104) process=17672 thread=14312 — User vkb33 updated their profile
+[2026-04-28 10:36:45] ERROR    users.views (views.profile_edit:120) process=17672 thread=14312 — Non-image file upload attempt by user vkb33: filename=тест.txt error=Загрузите правильное изображение. Файл, который вы загрузили, поврежден или не является изображением.
+NoneType: None
+[2026-04-28 10:37:32] WARNING  users.signals (signals.on_user_login_failed:23) process=17672 thread=14312 — Failed login attempt: username=Cheez1c ip=127.0.0.1
+[2026-04-28 10:37:40] INFO     users.signals (signals.on_user_logged_in:14) process=17672 thread=14312 — User logged in successfully: username=Cheez1c ip=127.0.0.1
+[2026-04-28 10:37:57] INFO     users.views (views.accept_friend_request:170) process=17672 thread=14312 — Friend request accepted: user=Cheez1c accepted request from=vkb33

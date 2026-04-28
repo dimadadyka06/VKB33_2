@@ -3,7 +3,13 @@
 {% block content %}
 <div class="profile-wrapper">
     <div class="profile-card">
-        <div class="profile-avatar">{{ profile_user.username|first|upper }}</div>
+        {% if profile_user.avatar %}
+            <img src="{{ profile_user.avatar.url }}" alt="Аватар"
+                 class="profile-avatar"
+                 style="width:90px;height:90px;border-radius:50%;object-fit:cover;">
+        {% else %}
+            <div class="profile-avatar">{{ profile_user.username|first|upper }}</div>
+        {% endif %}
         <h2>{{ profile_user.get_full_name|default:profile_user.username }}</h2>
         <p class="profile-username">@{{ profile_user.username }}</p>
 
@@ -46,7 +52,13 @@
             <div class="friends-grid">
                 {% for friend in profile_user.friends.all %}
                 <a href="{% url 'profile' username=friend.username %}" class="friend-chip">
-                    <span class="friend-avatar">{{ friend.username|first|upper }}</span>
+                    {% if friend.avatar %}
+                        <img src="{{ friend.avatar.url }}" alt="{{ friend.username }}"
+                             class="friend-avatar"
+                             style="width:32px;height:32px;border-radius:50%;object-fit:cover;">
+                    {% else %}
+                        <span class="friend-avatar">{{ friend.username|first|upper }}</span>
+                    {% endif %}
                     {{ friend.username }}
                 </a>
                 {% endfor %}

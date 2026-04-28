@@ -1,6 +1,5 @@
 """
 conftest.py — общие фикстуры.
-Файл должен лежать рядом с manage.py и pytest.ini
 """
 import django
 import os

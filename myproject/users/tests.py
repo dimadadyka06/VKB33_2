@@ -145,9 +145,9 @@ class TestRegistration:
         assert 'email' in response.context['form'].errors
 
 
-# ===========================================================================
+
 # 2. Тесты входа / выхода
-# ===========================================================================
+
 
 @pytest.mark.django_db
 class TestLoginLogout:
